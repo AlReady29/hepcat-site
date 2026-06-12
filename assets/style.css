@@ -1,0 +1,539 @@
+/* ============================================================
+   Hepcat — sito statico (landing + documenti legali)
+   Palette "Ottanio & Oro" del design system dell'app.
+   Art Deco raffinato: cornici sottili, diamanti, ventagli.
+   ============================================================ */
+
+:root {
+	--bg: #0a1a1f;
+	--card: #0f2a30;
+	--surface: #153035;
+	--accent: #1a6b6a;
+	--accent-light: #2a9d8f;
+	--gold: #d4a843;
+	--gold-light: #e8c76a;
+	--text: #f0ead6;
+	--text-secondary: #b8c4b8;
+	--muted: #7a9a8e;
+	--border: #1e3a40;
+
+	--font-display: 'Poiret One', 'Lora', serif;
+	--font-heading: 'Lora', Georgia, serif;
+	--font-body: 'Jost', 'Gill Sans', 'Futura', sans-serif;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--bg);
+	color: var(--text);
+	font-family: var(--font-body);
+	font-size: 17px;
+	line-height: 1.65;
+	font-weight: 300;
+	letter-spacing: 0.01em;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Atmosfera: due aloni ottanio + grana sottile, niente flat color */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	background:
+		radial-gradient(ellipse 70% 45% at 50% -5%, rgba(26, 107, 106, 0.22), transparent 65%),
+		radial-gradient(ellipse 50% 35% at 85% 105%, rgba(212, 168, 67, 0.06), transparent 60%);
+	pointer-events: none;
+	z-index: 0;
+}
+
+body::after {
+	content: '';
+	position: fixed;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+	opacity: 0.035;
+	pointer-events: none;
+	z-index: 0;
+}
+
+main,
+header,
+footer {
+	position: relative;
+	z-index: 1;
+}
+
+a {
+	color: var(--gold);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+a:hover {
+	color: var(--gold-light);
+}
+
+::selection {
+	background: var(--gold);
+	color: var(--bg);
+}
+
+.wrap {
+	max-width: 1060px;
+	margin: 0 auto;
+	padding: 0 24px;
+}
+
+/* ── Ornamenti deco ──────────────────────────────────────── */
+
+.diamond {
+	display: inline-block;
+	color: var(--gold);
+	font-size: 0.7em;
+	vertical-align: 0.15em;
+}
+
+.deco-rule {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin: 0 auto;
+	max-width: 320px;
+	color: var(--gold);
+}
+
+.deco-rule::before,
+.deco-rule::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: linear-gradient(to var(--dir, right), transparent, var(--gold));
+}
+
+.deco-rule::before {
+	--dir: right;
+}
+
+.deco-rule::after {
+	--dir: left;
+}
+
+/* ── Nav ─────────────────────────────────────────────────── */
+
+.nav {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	padding: 28px 0 0;
+}
+
+.nav-brand {
+	font-family: var(--font-display);
+	font-size: 24px;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--text);
+}
+
+.nav-brand:hover {
+	color: var(--gold-light);
+}
+
+.nav-links {
+	display: flex;
+	gap: 28px;
+	font-size: 13px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+
+.nav-links a {
+	color: var(--text-secondary);
+}
+
+.nav-links a:hover {
+	color: var(--gold);
+}
+
+/* ── Hero ────────────────────────────────────────────────── */
+
+.hero {
+	text-align: center;
+	padding: 96px 0 110px;
+}
+
+.sunburst {
+	width: 190px;
+	height: 96px;
+	margin: 0 auto 36px;
+	display: block;
+}
+
+.hero h1 {
+	font-family: var(--font-display);
+	font-weight: 400;
+	font-size: clamp(56px, 11vw, 116px);
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	text-indent: 0.28em; /* compensa il letter-spacing finale */
+	line-height: 1.05;
+	color: var(--text);
+	animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.hero h1 .gold {
+	color: var(--gold);
+}
+
+.hero .tagline {
+	font-family: var(--font-heading);
+	font-style: italic;
+	font-size: clamp(18px, 2.6vw, 23px);
+	color: var(--text-secondary);
+	max-width: 560px;
+	margin: 26px auto 0;
+	animation: rise 0.9s 0.15s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.hero .free-line {
+	margin-top: 18px;
+	font-size: 13px;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--gold);
+	animation: rise 0.9s 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.store-badges {
+	display: flex;
+	justify-content: center;
+	gap: 16px;
+	margin-top: 44px;
+	flex-wrap: wrap;
+	animation: rise 0.9s 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.store-badge {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 1px;
+	border: 1px solid var(--gold);
+	border-radius: 2px;
+	padding: 11px 26px 12px;
+	color: var(--text);
+	position: relative;
+	transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.store-badge small {
+	font-size: 10px;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.store-badge span {
+	font-family: var(--font-heading);
+	font-size: 17px;
+	letter-spacing: 0.04em;
+}
+
+.store-badge:hover {
+	background: rgba(212, 168, 67, 0.08);
+	transform: translateY(-2px);
+	color: var(--text);
+}
+
+/* angolini deco sui badge */
+.store-badge::before,
+.store-badge::after {
+	content: '';
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border: 1px solid var(--gold);
+}
+
+.store-badge::before {
+	top: -4px;
+	left: -4px;
+	border-right: none;
+	border-bottom: none;
+}
+
+.store-badge::after {
+	bottom: -4px;
+	right: -4px;
+	border-left: none;
+	border-top: none;
+}
+
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(18px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* ── Sezione funzioni ────────────────────────────────────── */
+
+.section-head {
+	text-align: center;
+	margin-bottom: 64px;
+}
+
+.section-head .kicker {
+	font-size: 12px;
+	letter-spacing: 0.38em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin-bottom: 14px;
+}
+
+.section-head h2 {
+	font-family: var(--font-heading);
+	font-weight: 500;
+	font-size: clamp(30px, 4.5vw, 42px);
+	letter-spacing: 0.02em;
+}
+
+.features {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1px;
+	background: var(--border);
+	border: 1px solid var(--border);
+	margin-bottom: 120px;
+}
+
+.feature {
+	background: var(--bg);
+	padding: 44px 40px 48px;
+	position: relative;
+	transition: background 0.3s ease;
+}
+
+.feature:hover {
+	background: var(--card);
+}
+
+.feature .num {
+	font-family: var(--font-display);
+	font-size: 15px;
+	letter-spacing: 0.3em;
+	color: var(--gold);
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 22px;
+}
+
+.feature .num::after {
+	content: '';
+	width: 36px;
+	height: 1px;
+	background: var(--gold);
+	opacity: 0.5;
+}
+
+.feature h3 {
+	font-family: var(--font-heading);
+	font-weight: 500;
+	font-size: 23px;
+	margin-bottom: 12px;
+}
+
+.feature p {
+	color: var(--text-secondary);
+	font-size: 16px;
+}
+
+/* ── Strip citazione ─────────────────────────────────────── */
+
+.strip {
+	text-align: center;
+	padding: 0 0 120px;
+}
+
+.strip blockquote {
+	font-family: var(--font-heading);
+	font-style: italic;
+	font-size: clamp(22px, 3.4vw, 30px);
+	color: var(--text);
+	max-width: 640px;
+	margin: 34px auto 0;
+}
+
+.strip .who {
+	margin-top: 16px;
+	font-size: 12px;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+
+footer {
+	border-top: 1px solid var(--border);
+	padding: 44px 0 56px;
+	text-align: center;
+	font-size: 14px;
+	color: var(--muted);
+}
+
+footer .footer-links {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	flex-wrap: wrap;
+	margin-bottom: 18px;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+footer .footer-links span {
+	color: var(--border);
+}
+
+/* ── Pagine documento (privacy / termini) ────────────────── */
+
+.doc {
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 72px 24px 96px;
+}
+
+.doc-head {
+	text-align: center;
+	margin-bottom: 56px;
+}
+
+.doc-head .kicker {
+	font-size: 12px;
+	letter-spacing: 0.38em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin-bottom: 14px;
+}
+
+.doc-head h1 {
+	font-family: var(--font-heading);
+	font-weight: 500;
+	font-size: clamp(30px, 5vw, 40px);
+	margin-bottom: 16px;
+}
+
+.doc-head .meta {
+	font-size: 14px;
+	color: var(--muted);
+}
+
+.doc h2 {
+	font-family: var(--font-heading);
+	font-weight: 500;
+	font-size: 22px;
+	margin: 48px 0 14px;
+	display: flex;
+	align-items: baseline;
+	gap: 12px;
+}
+
+.doc h2 .n {
+	font-family: var(--font-display);
+	color: var(--gold);
+	font-size: 16px;
+	letter-spacing: 0.1em;
+	white-space: nowrap;
+}
+
+.doc p,
+.doc li {
+	color: var(--text-secondary);
+	margin-bottom: 12px;
+}
+
+.doc ul {
+	padding-left: 22px;
+	margin-bottom: 14px;
+}
+
+.doc li::marker {
+	color: var(--gold);
+}
+
+.doc strong {
+	color: var(--text);
+	font-weight: 500;
+}
+
+.doc .lang-switch {
+	text-align: center;
+	font-size: 13px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	margin-bottom: 8px;
+}
+
+.doc .placeholder {
+	color: var(--gold-light);
+	background: rgba(212, 168, 67, 0.08);
+	border: 1px dashed rgba(212, 168, 67, 0.4);
+	border-radius: 2px;
+	padding: 0 6px;
+}
+
+.doc table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 8px 0 18px;
+	font-size: 15px;
+}
+
+.doc th,
+.doc td {
+	text-align: left;
+	padding: 10px 12px;
+	border: 1px solid var(--border);
+	color: var(--text-secondary);
+	vertical-align: top;
+}
+
+.doc th {
+	color: var(--gold);
+	font-weight: 400;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+	.features {
+		grid-template-columns: 1fr;
+	}
+
+	.hero {
+		padding: 72px 0 84px;
+	}
+
+	.nav-links {
+		gap: 16px;
+	}
+}
