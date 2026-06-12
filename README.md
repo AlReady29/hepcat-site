@@ -13,20 +13,21 @@ site/
   assets/style.css  stile condiviso (palette Ottanio & Oro dell'app)
 ```
 
-## ⚠️ Da compilare prima della pubblicazione
+## ⚠️ Da compilare prima della submission
 
-I segnaposto sono evidenziati in giallo nelle pagine (classe `.placeholder`):
+Compilati (2026-06-12): titolare **Alessandro Di Già**, regione Supabase
+**UE — Francoforte (eu-central-1)**, foro di **Roma**.
+
+Segnaposto rimanenti, evidenziati in giallo nelle pagine (classe `.placeholder`):
 
 | Dove | Cosa |
 | --- | --- |
-| `privacy*.html`, `terms*.html` | **Nome e cognome del titolare** del trattamento |
-| `privacy*.html`, `terms*.html` | **Email di contatto/supporto** (anche nel footer di `index.html`) |
-| `privacy*.html` | **Regione del progetto Supabase** (verificare nella dashboard: Settings → General) |
-| `terms*.html` | **Città del titolare** (foro competente) |
+| `privacy*.html`, `terms*.html` | **Email di contatto/supporto dedicata** (anche nel `mailto:` del footer di `index.html`) — da creare, vedi nota sotto |
 | `index.html` | Link e badge ufficiali App Store / Google Play dopo la pubblicazione |
 
-Dopo la compilazione, rimuovere la classe `placeholder` dagli `<span>` per
-togliere l'evidenziazione.
+Email: decisione presa per una casella **dedicata** (non quella personale),
+idealmente su dominio custom (es. `supporto@hepcat.app` con Cloudflare Email
+Routing). Dopo la creazione, sostituire e rimuovere la classe `placeholder`.
 
 ## Cose da verificare prima di pubblicare
 
@@ -36,13 +37,21 @@ togliere l'evidenziazione.
 - L'URL pubblico di `privacy.html` va inserito in App Store Connect e nella
   Play Console (e deve combaciare con i link in-app in `constants/legal.ts`).
 
-## Deploy consigliato
+## Deploy
 
-Qualsiasi hosting statico va bene. Due opzioni gratuite:
+Il sito è pubblicato su **GitHub Pages** dal repo pubblico
+[`AlReady29/hepcat-site`](https://github.com/AlReady29/hepcat-site)
+(branch `main`, root): <https://already29.github.io/hepcat-site/>.
 
-- **GitHub Pages**: repo pubblico dedicato (es. `hepcat-site`) con questi file,
-  Settings → Pages → branch `main`. URL tipo `https://<user>.github.io/hepcat-site/`.
-- **Vercel/Netlify**: drag & drop della cartella `site/` o deploy da repo.
+**Questa cartella è la fonte di verità.** Per aggiornare il sito:
 
-Con un dominio custom (es. `hepcat.app`) gli URL legali restano stabili anche
-cambiando hosting: preferibile prima della submission negli store.
+```bash
+git clone https://github.com/AlReady29/hepcat-site.git /tmp/hepcat-site-deploy
+cp -R site/ /tmp/hepcat-site-deploy/
+cd /tmp/hepcat-site-deploy && git add -A && git commit -m "Aggiorna sito" && git push
+```
+
+Gli URL sono referenziati in `constants/legal.ts` e andranno dichiarati in App
+Store Connect e Play Console. Con un dominio custom (es. `hepcat.app`) gli URL
+legali restano stabili anche cambiando hosting: valutarlo prima della
+submission negli store.
