@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+	<!-- Sfondo ottanio scuro con aloni teal -->
+	<defs>
+		<radialGradient id="glowL" cx="22%" cy="30%" r="55%">
+			<stop offset="0%" stop-color="#1a6b6a" stop-opacity="0.45"/>
+			<stop offset="100%" stop-color="#1a6b6a" stop-opacity="0"/>
+		</radialGradient>
+		<radialGradient id="glowR" cx="82%" cy="78%" r="55%">
+			<stop offset="0%" stop-color="#2a9d8f" stop-opacity="0.30"/>
+			<stop offset="100%" stop-color="#2a9d8f" stop-opacity="0"/>
+		</radialGradient>
+		<linearGradient id="goldText" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0%" stop-color="#e8c76a"/>
+			<stop offset="100%" stop-color="#d4a843"/>
+		</linearGradient>
+	</defs>
+
+	<rect width="1200" height="630" fill="#0a1a1f"/>
+	<rect width="1200" height="630" fill="url(#glowL)"/>
+	<rect width="1200" height="630" fill="url(#glowR)"/>
+
+	<!-- Cornice Art Deco oro sottile -->
+	<rect x="28" y="28" width="1144" height="574" rx="10" fill="none" stroke="#d4a843" stroke-width="1.5" opacity="0.55"/>
+	<rect x="40" y="40" width="1120" height="550" rx="6" fill="none" stroke="#d4a843" stroke-width="0.75" opacity="0.30"/>
+
+	<!-- Ventaglio deco (sunburst) in alto al centro -->
+	<g transform="translate(600 150)" stroke="#d4a843" fill="none">
+		<g stroke-width="1.4">
+			<path d="M0 60 L0 -40" opacity="0.9"/>
+			<path d="M0 60 L-40 -32" opacity="0.8"/>
+			<path d="M0 60 L40 -32" opacity="0.8"/>
+			<path d="M0 60 L-72 -10" opacity="0.6"/>
+			<path d="M0 60 L72 -10" opacity="0.6"/>
+			<path d="M0 60 L-92 20" opacity="0.4"/>
+			<path d="M0 60 L92 20" opacity="0.4"/>
+		</g>
+		<g stroke-width="1.2">
+			<path d="M-50 60 A50 50 0 0 1 50 60" opacity="0.7"/>
+			<path d="M-74 60 A74 74 0 0 1 74 60" opacity="0.45"/>
+			<path d="M-98 60 A98 98 0 0 1 98 60" opacity="0.25"/>
+		</g>
+	</g>
+
+	<!-- Wordmark -->
+	<text x="600" y="370" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+		font-size="138" font-weight="500" letter-spacing="6" fill="url(#goldText)">Hepcat</text>
+
+	<!-- Diamantini ai lati del payoff -->
+	<g fill="#d4a843">
+		<rect x="318" y="424" width="11" height="11" transform="rotate(45 323.5 429.5)"/>
+		<rect x="871" y="424" width="11" height="11" transform="rotate(45 876.5 429.5)"/>
+	</g>
+
+	<!-- Payoff -->
+	<text x="600" y="438" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+		font-size="34" font-style="italic" fill="#f0ead6" letter-spacing="1">Il diario del ballerino swing</text>
+
+	<!-- Sottotitolo funzioni -->
+	<text x="600" y="500" text-anchor="middle" font-family="'Gill Sans', 'Helvetica Neue', Arial, sans-serif"
+		font-size="24" fill="#b8c4b8" letter-spacing="2">Festival · Amici · Annunci · Viaggi di gruppo</text>
+
+	<!-- Dominio -->
+	<text x="600" y="560" text-anchor="middle" font-family="'Gill Sans', 'Helvetica Neue', Arial, sans-serif"
+		font-size="22" fill="#d4a843" letter-spacing="4">hepcatapp.com</text>
+</svg>
