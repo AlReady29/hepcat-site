@@ -95,11 +95,15 @@ a:hover {
 
 /* ── Ornamenti deco ──────────────────────────────────────── */
 
+/* Diamante Art Deco: quadrato ruotato, non una stella-sparkle. */
 .diamond {
 	display: inline-block;
-	color: var(--gold);
-	font-size: 0.7em;
-	vertical-align: 0.15em;
+	width: 6px;
+	height: 6px;
+	flex: none;
+	background: var(--gold);
+	transform: rotate(45deg);
+	opacity: 0.85;
 }
 
 .deco-rule {
@@ -150,6 +154,7 @@ a:hover {
 
 .nav-links {
 	display: flex;
+	align-items: center;
 	gap: 28px;
 	font-size: 13px;
 	letter-spacing: 0.18em;
@@ -162,6 +167,18 @@ a:hover {
 
 .nav-links a:hover {
 	color: var(--gold);
+}
+
+/* Toggle lingua (EN/IT) nel menu */
+.nav-links .nav-lang {
+	color: var(--gold);
+	border: 1px solid var(--border);
+	border-radius: 2px;
+	padding: 1px 7px;
+}
+
+.nav-links .nav-lang:hover {
+	border-color: var(--gold);
 }
 
 /* ── Hero ────────────────────────────────────────────────── */
@@ -362,26 +379,26 @@ a:hover {
 	font-size: 16px;
 }
 
-/* ── Strip citazione ─────────────────────────────────────── */
+/* ── Chiusura ─────────────────────────────────────────────── */
 
 .strip {
 	text-align: center;
 	padding: 0 0 120px;
 }
 
-.strip blockquote {
+.strip .quote {
 	font-family: var(--font-heading);
 	font-style: italic;
-	font-size: clamp(22px, 3.4vw, 30px);
+	font-size: clamp(21px, 3.2vw, 29px);
 	color: var(--text);
-	max-width: 640px;
-	margin: 34px auto 0;
+	max-width: 620px;
+	margin: 30px auto 0;
 }
 
-.strip .who {
-	margin-top: 16px;
+.strip .cite {
+	margin-top: 14px;
 	font-size: 12px;
-	letter-spacing: 0.32em;
+	letter-spacing: 0.28em;
 	text-transform: uppercase;
 	color: var(--muted);
 }
@@ -399,6 +416,7 @@ footer {
 footer .footer-links {
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	gap: 10px;
 	flex-wrap: wrap;
 	margin-bottom: 18px;
@@ -480,22 +498,6 @@ footer .footer-links span {
 .doc strong {
 	color: var(--text);
 	font-weight: 500;
-}
-
-.doc .lang-switch {
-	text-align: center;
-	font-size: 13px;
-	letter-spacing: 0.18em;
-	text-transform: uppercase;
-	margin-bottom: 8px;
-}
-
-.doc .placeholder {
-	color: var(--gold-light);
-	background: rgba(212, 168, 67, 0.08);
-	border: 1px dashed rgba(212, 168, 67, 0.4);
-	border-radius: 2px;
-	padding: 0 6px;
 }
 
 .doc table {
