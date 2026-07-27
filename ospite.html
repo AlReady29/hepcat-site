@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex" />
+		<title>Hepcat — la tua iscrizione</title>
+		<style>
+			:root {
+				color-scheme: dark;
+			}
+			body {
+				margin: 0;
+				min-height: 100vh;
+				display: grid;
+				place-items: center;
+				background: #0f1c1e;
+				color: #f4ecd8;
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+				padding: 24px;
+			}
+			.card {
+				max-width: 28rem;
+				width: 100%;
+			}
+			h1 {
+				font-size: 1.35rem;
+				margin: 0 0 0.75rem;
+			}
+			h2 {
+				font-size: 0.95rem;
+				margin: 2rem 0 0.5rem;
+				color: #e0b64a;
+			}
+			p {
+				color: #b9c4c2;
+				line-height: 1.6;
+				margin: 0 0 1rem;
+			}
+			dl {
+				margin: 1.25rem 0;
+				padding: 0;
+			}
+			dt {
+				color: #7f8f8d;
+				font-size: 0.7rem;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				margin-top: 0.85rem;
+			}
+			dd {
+				margin: 0.15rem 0 0;
+				color: #f4ecd8;
+				font-size: 1rem;
+			}
+			button {
+				font: inherit;
+				cursor: pointer;
+				border-radius: 10px;
+				padding: 0.8rem 1.2rem;
+				width: 100%;
+				border: 1px solid #3a4a48;
+				background: transparent;
+				color: #f4ecd8;
+			}
+			button.danger {
+				border-color: #c45b4a;
+				color: #e79b8d;
+			}
+			button[disabled] {
+				opacity: 0.5;
+				cursor: default;
+			}
+			a {
+				color: #e0b64a;
+			}
+			.muted {
+				color: #7f8f8d;
+				font-size: 0.85rem;
+			}
+			.hidden {
+				display: none;
+			}
+			.lang {
+				text-align: right;
+				font-size: 0.85rem;
+				margin-bottom: 1rem;
+			}
+		</style>
+	</head>
+	<body>
+		<main class="card">
+			<div class="lang"><a href="/ospite-en.html">English</a></div>
+
+			<div id="loading"><p>Un momento…</p></div>
+
+			<div id="notfound" class="hidden">
+				<h1>Questo collegamento non è più valido</h1>
+				<p>
+					Può succedere se l'iscrizione è già stata annullata, oppure se il collegamento è
+					incompleto: copialo dall'email per intero. Se hai bisogno, scrivi a
+					<a href="mailto:privacy@hepcatapp.com">privacy@hepcatapp.com</a>.
+				</p>
+			</div>
+
+			<div id="content" class="hidden">
+				<h1 id="title"></h1>
+				<p id="intro"></p>
+
+				<dl>
+					<dt>Festival</dt>
+					<dd id="festival"></dd>
+					<dt>Quando</dt>
+					<dd id="dates"></dd>
+					<dt>Ruolo</dt>
+					<dd id="role"></dd>
+					<dt>Stato</dt>
+					<dd id="status"></dd>
+				</dl>
+
+				<h2>Come entri</h2>
+				<p id="entry"></p>
+
+				<h2>Perché abbiamo i tuoi dati</h2>
+				<p id="why"></p>
+				<p class="muted">
+					Il titolare del trattamento è Hepcat. Trovi tutto nell'<a href="/privacy.html"
+						>informativa privacy</a
+					>: cosa trattiamo, per quanto, e come esercitare i tuoi diritti. Per qualsiasi
+					richiesta: <a href="mailto:privacy@hepcatapp.com">privacy@hepcatapp.com</a>.
+				</p>
+
+				<h2>Non voglio partecipare</h2>
+				<p>
+					Puoi annullare la tua iscrizione adesso, senza creare nessun account. Il posto torna
+					libero e chi ti ha invitato resta iscritto per conto suo.
+				</p>
+				<button id="cancel" class="danger" type="button">Annulla la mia iscrizione</button>
+				<p id="cancelError" class="muted hidden">
+					Non ha funzionato. Riprova fra poco, o scrivi a
+					<a href="mailto:privacy@hepcatapp.com">privacy@hepcatapp.com</a>.
+				</p>
+			</div>
+
+			<div id="cancelled" class="hidden">
+				<h1>Iscrizione annullata</h1>
+				<p>
+					Non risulti più iscritto. Chi ti aveva invitato resta iscritto per conto suo, e questo
+					collegamento non è più valido.
+				</p>
+				<p class="muted">
+					Se vuoi che cancelliamo anche i dati che restano associati a questa iscrizione, scrivi a
+					<a href="mailto:privacy@hepcatapp.com">privacy@hepcatapp.com</a>.
+				</p>
+			</div>
+		</main>
+
+		<script>
+			// ⚠️ Il token sta nel FRAMMENTO (#t=…), non nella query: così non finisce
+			// nei log del server che serve questa pagina né nell'header Referer verso
+			// terzi. Il browser non lo manda a nessuno; lo mandiamo noi, e solo alla
+			// nostra funzione.
+			const FN_URL = 'https://tkjftsqpexawgphbydyq.supabase.co/functions/v1/guest-access';
+			const token = new URLSearchParams(location.hash.slice(1)).get('t');
+
+			const $ = (id) => document.getElementById(id);
+			const show = (id) => $(id).classList.remove('hidden');
+			const hide = (id) => $(id).classList.add('hidden');
+
+			const ROLE = { leader: 'Leader', follower: 'Follower' };
+
+			function formatDates(start, end) {
+				const opts = { day: 'numeric', month: 'long', year: 'numeric' };
+				const s = new Date(`${start}T12:00:00`).toLocaleDateString('it-IT', opts);
+				if (!end || end === start) return s;
+				const e = new Date(`${end}T12:00:00`).toLocaleDateString('it-IT', opts);
+				return `${s} – ${e}`;
+			}
+
+			async function call(action) {
+				const res = await fetch(FN_URL, {
+					method: 'POST',
+					headers: { 'content-type': 'application/json' },
+					body: JSON.stringify({ token, action }),
+				});
+				return { ok: res.ok, data: await res.json().catch(() => ({})) };
+			}
+
+			async function load() {
+				if (!token) {
+					hide('loading');
+					show('notfound');
+					return;
+				}
+				const { ok, data } = await call('info');
+				hide('loading');
+				if (!ok || !data.ok) {
+					show('notfound');
+					return;
+				}
+				if (data.guest.cancelled) {
+					show('cancelled');
+					return;
+				}
+
+				const inviter = data.invitedByName || 'la persona con cui balli';
+				$('title').textContent = `Ciao ${data.guest.name}`;
+				$('intro').textContent =
+					`${inviter} ti ha iscritto insieme a sé: siete iscritti come coppia, e in una coppia si entra insieme o si aspetta insieme.`;
+				$('festival').textContent = data.festival.city
+					? `${data.festival.name} · ${data.festival.city}`
+					: data.festival.name;
+				$('dates').textContent = formatDates(data.festival.startDate, data.festival.endDate);
+				$('role').textContent = ROLE[data.guest.role] || data.guest.role;
+				$('status').textContent =
+					data.guest.seatStatus === 'waitlisted'
+						? "Siete in lista d'attesa tutti e due"
+						: data.guest.paymentStatus === 'paid'
+							? 'Posto confermato, pass pagato'
+							: 'Posto confermato, pass da pagare';
+				$('entry').textContent =
+					`All'ingresso il pass lo mostra ${inviter} dal suo telefono: il codice cambia di continuo, e per questo non te lo mandiamo per email né lo mettiamo in questa pagina.`;
+				$('why').textContent =
+					`Non ce li hai dati tu: ce li ha dati ${inviter} iscrivendoti a questo festival. Di te conserviamo nome, email e il ruolo con cui balli. Servono a tenere l'iscrizione e a farti entrare, e li vede l'organizzatore del festival, come per ogni iscritto. Non ti manderemo altro.`;
+				show('content');
+			}
+
+			$('cancel').addEventListener('click', async () => {
+				$('cancel').disabled = true;
+				hide('cancelError');
+				const { ok, data } = await call('cancel');
+				if (ok && data.ok) {
+					hide('content');
+					show('cancelled');
+					return;
+				}
+				$('cancel').disabled = false;
+				show('cancelError');
+			});
+
+			load();
+		</script>
+	</body>
+</html>
